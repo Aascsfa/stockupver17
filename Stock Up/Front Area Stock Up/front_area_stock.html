@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Front Area</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+        h2 {
+            color: #666;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            vertical-align: top; /* Align content to the top */
+            width: 25%; /* Equal width for each column */
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        td input {
+            width: calc(100% - 20px); /* Adjust input width */
+            box-sizing: border-box;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Stock up Calculator</h1>
+        <div class="section">
+            <h2>Counter</h2>
+            <table>
+                <tr>
+                    <th>Item</th>
+                    <th>Current Stock</th>
+                    <th>Required Stock</th>
+                    <th>Quantity</th> <!-- New column -->
+                </tr>
+                <tr>
+                    <td>Cone</td>
+                    <td><input type="number" id="cone" name="cone" min="0" oninput="this.value && calculateQuantity('cone')"></td>
+                    <td>12</td>
+                    <td id="coneQuantity">0</td> <!-- Placeholder for Quantity -->
+                </tr>
+                <tr>
+                    <td>Cup Holder</td>
+                    <td><input type="number" id="cupHolder" name="cupHolder" min="0" oninput="this.value && calculateQuantity('cupHolder')"></td>
+                    <td>10</td>
+                    <td id="cupHolderQuantity">0</td> <!-- Placeholder for Quantity -->
+                </tr>
+            </table>
+        </div>
+        <div class="section">
+            <h2>Present</h2>
+            <table>
+                <tr>
+                    <th>Item</th>
+                    <th>Current Stock</th>
+                    <th>Required Stock</th>
+                    <th>Quantity</th> <!-- New column -->
+                </tr>
+                <tr>
+                    <td>HM Toy</td>
+                    <td><input type="number" id="happyMealToy" name="happyMealToy" min="0" oninput="this.value && calculateQuantity('happyMealToy')"></td>
+                    <td>25</td>
+                    <td id="happyMealToyQuantity">0</td> <!-- Placeholder for Quantity -->
+                </tr>
+            </table>
+        </div>
+        <div class="section">
+            <h2>Uber</h2>
+            <table>
+                <tr>
+                    <th>Item</th>
+                    <th>Current Stock</th>
+                    <th>Required Stock</th>
+                    <th>Quantity</th> <!-- New column -->
+                </tr>
+                <tr>
+                    <td>Medium Bag</td>
+                    <td><input type="number" id="mediumBag" name="mediumBag" min="0" oninput="this.value && calculateQuantity('mediumBag')"></td>
+                    <td>10</td>
+                    <td id="mediumBagQuantity">0</td> <!-- Placeholder for Quantity -->
+                </tr>
+            </table>
+        </div>
+        <a href="front_area_stock_summary.html" class="btn">Calculate Stock</a>
+    </div>
+
+    <!-- JavaScript code to calculate Quantity -->
+    <script>
+        // Function to calculate Quantity
+        function calculateQuantity(item) {
+            // Function to handle empty inputs
+            const getStockInput = (elementId) => {
+                const value = document.getElementById(elementId).value.trim();
+                return value === '' ? 0 : parseInt(value);
+            };
+
+            // Get input value and calculate Quantity for the specified item
+            const stock = getStockInput(item);
+            const requiredStock = {
+                cone: 12,
+                cupHolder: 10,
+                happyMealToy: 25,
+                mediumBag: 10
+            };
+            const quantity = Math.max(0, requiredStock[item] - stock);
+
+            // Update the Quantity value in the table
+            document.getElementById(`${item}Quantity`).textContent = quantity;
+            // Store the quantity value in localStorage
+            localStorage.setItem(`${item}Quantity`, quantity);
+        }
+    </script>
+</body>
+</html>
